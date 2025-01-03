@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="STYLE.CSS">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="icon.png" type="image/x-icon">
+    <title>GOTV</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+    <div class="card-content">
+    <div class="card">
+    <div class="card-image"><img id="img1" src="MOUSE.jpg"></div>
+            <div class="card-info">
+                <h3 id="mouse">MOUSE</h3>
+                <p id="p1">"Mouse" is a captivating South Korean drama following Detective Go Moo-chi's pursuit of a psychopathic killer. As the plot unfolds, 
+                his life takes</p>
+            </div>
+        </div>
+        <div class="card">
+        <div class="card-image"><img id="img2" src="the kingdom.jpg"></div>
+        <div class="card-info">
+            <h3 id="king">THE KINGDOM</h3>
+            <p id="p2">"The Kingdom" is a gripping South Korean historical drama set in the Joseon period,
+                 where Crown Prince Lee Chang battles a deadly plague turning people into flesh-eating monsters</p>
+        </div>
+    </div>
+    </div>
+    <div id="BUSAN" class="card">
+    <div class="card-image"><img id="img3" src="TRAIN TO BUSAN.jpg"></div>
+    <div class="card-info">
+        <h3 id="busan">TRAIN TO BUSAN</h3>
+        <p id="p3">zombie film set on a high-speed train journey from Seoul to Busan. As a zombie outbreak unfolds, passengers fight for survival in a fast-paced </p>
+    </div>
+</div>
+</div>
+</div>
+    </div>
+         <div class="pagination">
+            <li class="page-item previous-page"><a class="page-link" href="#">Prev</a></li>
+            <li class="page-item current-page active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item dots"><a class="page-link" href="#">...</a></li>
+            <li class="page-item current-page"><a class="page-link" href="#">2</a></li>
+            <li class="page-item current-page"><a class="page-link" href="#">3</a></li>
+            <li class="page-item dots"><a class="page-link" href="#">...</a></li>
+            <li class="page-item current-page"><a class="page-link" href="#">4</a></li>
+            <li class="page-item next-page"><a class="page-link" href="#">Next</a></li>
+        </div>
+    </div>
+     
+
+
+    <script>
+        // img1
+        $(document).ready(function(){
+            $("#img1").mouseenter(function(){
+                $('#mouse').show(1000);
+            });
+        });
+        $(document).ready(function(){
+            $("#img1").mouseleave(function(){
+                $('#mouse').hide(1000);
+            });
+        });
+
+        $(document).ready(function(){
+            $("#img1").dblclick(function(){
+                $('#p1').show(1000);
+            });
+        });
+        $(document).ready(function(){
+            $("#img1").click(function(){
+                $('#p1').hide(1000);
+            });
+        });
+        // img2
+        $(document).ready(function(){
+            $("#img2").mouseenter(function(){
+                $('#king').show(1000);
+            });
+        });
+        $(document).ready(function(){
+            $("#img2").mouseleave(function(){
+                $('#king').hide(1000);
+            });
+        });
+
+        $(document).ready(function(){
+            $("#img2").dblclick(function(){
+                $('#p2').show(1000);
+            });
+        });
+        $(document).ready(function(){
+            $("#img2").click(function(){
+                $('#p2').hide(1000);
+            });
+        });
+
+        // img3
+        $(document).ready(function(){
+            $("#img3").mouseenter(function(){
+                $('#busan').show(1000);
+            });
+        });
+        $(document).ready(function(){
+            $("#img3").mouseleave(function(){
+                $('#busan').hide(1000);
+            });
+        });
+
+        $(document).ready(function(){
+            $("#img3").dblclick(function(){
+                $('#p3').show(1000);
+            });
+        });
+
+        $(document).ready(function(){
+            $("#img3").click(function(){
+                $('#p3').hide(1000);
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+    <script type="text/javascript">
+        function getPageList(totalPages,page,maxLenght){
+            function range(start,end){
+                return  Array.from(Array(end - start + 1 ),(_,i) => i +  start);
+            }
+            var sideWidth = maxLenght < 9 ? 1 : 2;
+            var leftWidth = (maxLenght - sideWidth * 2 -3) >> 1;
+            var rightWidth = (maxLenght - sideWidth * 2 -3) >> 1;
+            if(totalPages <= maxLenght){
+                return range(1, totalPages);
+            }
+            if (page <= maxLenght - sideWidth - 1 - rightWidth){
+                return range(1, maxLenght - sideWidth - 1 ).concat(0, range(totalPages - sideWidth + 1, totalPages));
+            }
+            if(page >= totalPages - sideWidth - 1 - rightWidth){
+                return range(1, sideWidth).concat(0, range(totalPages - sideWidth -1 -rightWidth - leftWidth - totalPages ));
+            }
+            return range(1, sideWidth).concat(0, range(page - leftWidth - page + rightWidth), 0, range(totalPages - sideWidth + 1, totalPages))
+        }
+
+
+        $(function(){
+            var numberOFItemes = $(".card-content .card").length;
+            var limitPerPage = 3;
+            var totalPages = Math.cell(numberOFItemes / limitPerPage);
+            var paginationSize = 7;
+            var currentPage;
+
+            function ShowPages(whichPage){
+                if(whichPage < 1 || whichPage > totalPages) return false;
+
+                currentPage = whichPage;
+
+                $(".card-content .card").hide().slice((currentPage - 1) * limitPerPage, currentPage *limitPerPage).show();
+
+                $(".pagination li").slice(1 , -1).remove();
+
+                getPageList(totalPages,currentPage,paginationSize).forEach(item => {
+                    $("<li").addClass("page-item").addClass(item ? "current-page" : "dots")
+                    .toggleClass("active" , item === currentPage).append($("<a>").addClass("page-link")
+                        .attr({href:"javascript:void(0)"}).text(item|| "...")).insertBefore(".next-page");
+                });
+
+                $("previous-page").toggleClass("disable" , currentPage === 1);
+                $("next-page").toggleClass("disable" , currentPage === totalPages);
+                return true;
+            }
+            $(".pagination").append(
+                $("<li>").addClass("page-item").addClass("previous-page").append($("<a>").addClass("page-link").attr({href: "javascript:void(0)"}).text("Prev")),
+                $("<li>").addClass("page-item").addClass("next-page").append($("<a>").addClass("page-link").attr({href: "javascript:void(0)"}).text("Next")),
+            );
+            $(".card-content").show();
+            ShowPages(1);
+        });
+
+    </script>
+    
+</body>
+</html>
